@@ -1,0 +1,8 @@
+platform: linux
+
+image: docker:///seadowg/android#android-23
+
+inputs:
+  - name: deckard-kotlin
+run:
+  path: deckard-kotlin/scripts/package.sh

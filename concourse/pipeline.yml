@@ -1,0 +1,37 @@
+resource_types:
+  - name: hockey
+    type: docker-image
+    source:
+      repository: seadowg/hockey-resource
+
+resources:
+  - name: deckard-kotlin
+    type: git
+    source:
+      uri: https://github.com/mooingcat/deckard-kotlin.git
+      branch: concourse
+
+  - name: hockey
+    type: hockey
+    source:
+      app_id: {{hockey_app_id}}
+      token: {{hockey_token}}
+
+jobs:
+  - name: test
+    plan:
+      - get: deckard-kotlin
+        trigger: true
+      - task: test
+        file: deckard-kotlin/concourse/tasks/test.yml
+
+  - name: deploy
+    plan:
+      - get: deckard-kotlin
+        trigger: true
+        passed: [test]
+      - task: package
+        file: deckard-kotlin/concourse/tasks/package.yml
+      - put: hockey
+        params:
+          path: package/app.apk
