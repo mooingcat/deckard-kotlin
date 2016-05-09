@@ -5,4 +5,4 @@ image: docker:///seadowg/android#android-23
 inputs:
   - name: deckard-kotlin
 run:
-  path: deckard-kotlin/scripts/test.sh
+  path: deckard-kotlin/concourse/scripts/test.sh
