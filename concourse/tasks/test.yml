@@ -1,8 +1,13 @@
 platform: linux
 
-image: docker:///seadowg/android#android-23
+image_resource:
+  type: docker-image
+  source:
+    repository: android
+    tag: android-23
 
 inputs:
   - name: deckard-kotlin
+  
 run:
   path: deckard-kotlin/concourse/scripts/test.sh
